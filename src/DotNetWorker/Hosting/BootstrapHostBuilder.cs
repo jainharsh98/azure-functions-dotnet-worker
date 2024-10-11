@@ -6,6 +6,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Azure.Functions.Worker.Hosting
 {
+    /// <summary>
+    /// Adapter to allow us to use our own <see cref="IHostBuilder"/> extensions with the
+    /// <see cref="IHostApplicationBuilder"/>. Based on the BootstrapHostBuilder from the 
+    /// AspNetCore source: https://github.com/dotnet/aspnetcore/blob/54c0cc8fa74e8196a2ce0711a20959143be7fb6f/src/DefaultBuilder/src/BootstrapHostBuilder.cs
+    /// </summary>
     internal class BootstrapHostBuilder : IHostBuilder
     {
         private readonly HostApplicationBuilder _builder;
@@ -18,6 +23,11 @@ namespace Microsoft.Azure.Functions.Worker.Hosting
 
         public BootstrapHostBuilder(HostApplicationBuilder builder)
         {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
             _builder = builder;
 
             foreach (var descriptor in _builder.Services)
@@ -93,7 +103,7 @@ namespace Microsoft.Azure.Functions.Worker.Hosting
             }
             else
             {
-                _configureServicesActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
+                _configureServicesActions.Add(configureDelegate);
             }
 
             return this;

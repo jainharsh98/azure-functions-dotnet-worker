@@ -1,10 +1,13 @@
-﻿using System;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Microsoft.Azure.Functions.Worker.Hosting
+namespace Microsoft.Azure.Functions.Worker.Builder
 {
     /// <summary>
     /// Adapter to allow us to use our own <see cref="IHostBuilder"/> extensions with the
@@ -23,12 +26,7 @@ namespace Microsoft.Azure.Functions.Worker.Hosting
 
         public BootstrapHostBuilder(HostApplicationBuilder builder)
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
-            _builder = builder;
+            _builder = builder ?? throw new ArgumentNullException(nameof(builder));
 
             foreach (var descriptor in _builder.Services)
             {
@@ -174,6 +172,7 @@ namespace Microsoft.Azure.Functions.Worker.Hosting
             }
 
             public object CreateBuilder(IServiceCollection services) => _serviceProviderFactory.CreateBuilder(services);
+
             public IServiceProvider CreateServiceProvider(object containerBuilder) => _serviceProviderFactory.CreateServiceProvider((TContainerBuilder)containerBuilder);
         }
     }

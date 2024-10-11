@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -173,8 +174,7 @@ namespace Microsoft.Extensions.Hosting
                     {
                         return props is not null &&
                             props.TryGetValue(FunctionsApplicationBuilder.SkipDefaultWorkerMiddlewareKey, out var skipObj) &&
-                            skipObj is bool skip &&
-                            skip;
+                            skipObj is true;
                     }
 
                     if (!ShouldSkipDefaultWorkerMiddleware(context.Properties))

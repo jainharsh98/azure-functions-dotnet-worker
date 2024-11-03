@@ -57,7 +57,7 @@ namespace Microsoft.Extensions.Hosting
         /// <returns>The <see cref="IHostBuilder"/>.</returns>
         public static IHostBuilder ConfigureFunctionsWorkerDefaults(this IHostBuilder builder, Action<IFunctionsWorkerApplicationBuilder> configure)
         {
-            return builder.ConfigureFunctionsWorkerDefaults(configure, o => { });
+            return builder.ConfigureFunctionsWorkerDefaults(configure, null);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="configure">A delegate that will be invoked to configure the provided <see cref="IFunctionsWorkerApplicationBuilder"/>.</param>
         /// <param name="configureOptions">A delegate that will be invoked to configure the provided <see cref="WorkerOptions"/>.</param>
         /// <returns>The <see cref="IHostBuilder"/>.</returns>
-        public static IHostBuilder ConfigureFunctionsWorkerDefaults(this IHostBuilder builder, Action<IFunctionsWorkerApplicationBuilder> configure, Action<WorkerOptions> configureOptions)
+        public static IHostBuilder ConfigureFunctionsWorkerDefaults(this IHostBuilder builder, Action<IFunctionsWorkerApplicationBuilder> configure, Action<WorkerOptions>? configureOptions)
         {
             return builder.ConfigureFunctionsWorkerDefaults((context, b) => configure(b), configureOptions);
         }
@@ -126,7 +126,7 @@ namespace Microsoft.Extensions.Hosting
         /// <returns>The <see cref="IHostBuilder"/>.</returns>
         public static IHostBuilder ConfigureFunctionsWorkerDefaults(this IHostBuilder builder, Action<HostBuilderContext, IFunctionsWorkerApplicationBuilder> configure)
         {
-            return builder.ConfigureFunctionsWorkerDefaults(configure, o => { });
+            return builder.ConfigureFunctionsWorkerDefaults(configure, null);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="configure">A delegate that will be invoked to configure the provided <see cref="HostBuilderContext"/> and an <see cref="IFunctionsWorkerApplicationBuilder"/>.</param>
         /// <param name="configureOptions">A delegate that will be invoked to configure the provided <see cref="WorkerOptions"/>.</param>
         /// <returns>The <see cref="IHostBuilder"/>.</returns>
-        public static IHostBuilder ConfigureFunctionsWorkerDefaults(this IHostBuilder builder, Action<HostBuilderContext, IFunctionsWorkerApplicationBuilder> configure, Action<WorkerOptions> configureOptions)
+        public static IHostBuilder ConfigureFunctionsWorkerDefaults(this IHostBuilder builder, Action<HostBuilderContext, IFunctionsWorkerApplicationBuilder> configure, Action<WorkerOptions>? configureOptions)
         {
             builder
                 .ConfigureHostConfiguration(config =>
